@@ -1,0 +1,35 @@
+package com.hackerrank.springboot.tests;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HackerrankApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HackerrankApplication.class, args);
+		String s = "22:07:10PM";
+		char amPm = s.charAt(s.length()-2); 
+		String time = s.substring(2,s.length() - 2);
+		String hour[] = s.split(":", 1);
+	/*	System.out.println(s);
+		System.out.println(amPm);
+		System.out.println(time);*/
+		System.out.println(hour);
+		/*if (amPm == 'A') {
+			System.out.println(s.substring(0, s.length()-2));
+		}
+		else {
+			
+		}*/
+	}
+
+}

@@ -1,0 +1,22 @@
+package com.hackerrank.springboot.tests;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HackerrankApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HackerrankApplication.class, args);
+		DateTimeFormatter pattern12HS = DateTimeFormatter
+                .ofPattern("hh:mm:ss");
+		DateTimeFormatter pattern24Hs = DateTimeFormatter
+                .ofPattern("HH:mm:ss");
+		LocalDateTime datetime = LocalDateTime.parse("07:22:00PM",pattern12Hs);
+		System.out.println(datetime);
+	}
+
+}

@@ -1,0 +1,19 @@
+package com.formacionbdi.springboot.app.gateway;
+
+import java.util.List;
+
+class Result {
+
+    
+
+    public static void plusMinus(List<Integer> arr) {
+       Integer positive;
+       Integer negative;
+       Integer zero;
+       int arr_size = arr.size();
+       for (int i = 0; i < arr_size(); i++) {
+            System.out.println(arr.get(i));
+        }
+    }
+
+}

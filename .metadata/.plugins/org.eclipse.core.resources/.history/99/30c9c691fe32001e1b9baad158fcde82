@@ -1,0 +1,26 @@
+package com.hackerrank.springboot.tests;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class HackerrankApplication throws IOException {
+
+	public static void main(String[] args) {
+		SpringApplication.run(HackerrankApplication.class, args);
+
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+        List<Integer> arr = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .map(Integer::parseInt)
+            .collect(toList());
+
+        Result.plusMinus(arr);
+
+        bufferedReader.close();
+
+	}
+
+}

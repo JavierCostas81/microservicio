@@ -1,0 +1,43 @@
+resilience4j:
+  circuitbreaker:
+    configs:
+      defecto:
+        sliding-window-size: 6
+        failure-rate-threshold: 50
+        wait-duration-in-open-state: 20s
+        permitted-number-of-calls-in-half-open-state: 4
+        slow-call-rate-threshold: 50
+        slow-call-duration-threshold: 2s
+    instances:
+     items:
+      base-config: defecto    
+  timelimiter:
+    configs:
+      defecto:
+        timeout-duration: 2s
+    instances:
+      items:
+        base-config: defecto  
+ #      shared:
+#        register-health-indicator: true
+#        sliding-window-type: count-based
+
+#       
+#        slow-call-rate-threshold: 40
+#        
+#        max-wait-duration-in-half-open-state: 10s
+#        
+#        slow-call-duration-threshold: 2s
+#        writable-stack-trace-enabled: true
+#        automatic-transition-from-open-to-half-open-enabled: true
+#    instances:
+#      example:
+#        base-config: shared
+#  timelimiter:
+#    configs:
+#      shared:
+#      timeout-duration: 2s
+#      cancel-running-future: true
+#    instances:
+#      example:
+#        base-config: shared
