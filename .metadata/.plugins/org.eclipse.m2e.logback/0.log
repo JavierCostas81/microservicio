@@ -8205,3 +8205,4 @@ org.eclipse.core.runtime.CoreException: Launch configuration HackerrankApplicati
 2023-09-14 16:57:09,516 [Worker-95: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2023-09-14 16:57:09,517 [Worker-95: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered properties files.
 2023-09-14 16:57:09,517 [Worker-95: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\springworkspace\microservicios\springboot-servicio-item\src\test\resources
+2023-09-14 17:28:34,063 [Worker-3: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
