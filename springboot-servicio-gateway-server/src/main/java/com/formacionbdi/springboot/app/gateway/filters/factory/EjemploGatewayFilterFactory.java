@@ -15,29 +15,28 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-public class EjemploGatewayFilterFactory extends AbstractGatewayFilterFactory<EjemploGatewayFilterFactory.Configuracion>{
-private final Logger logger = LoggerFactory.getLogger(EjemploGatewayFilterFactory.class);
-
+public class EjemploGatewayFilterFactory
+		extends AbstractGatewayFilterFactory<EjemploGatewayFilterFactory.Configuracion> {
+	private final Logger logger = LoggerFactory.getLogger(EjemploGatewayFilterFactory.class);
 
 	public EjemploGatewayFilterFactory() {
-	super(Configuracion.class);
-}
+		super(Configuracion.class);
+	}
 
 	@Override
 	public GatewayFilter apply(Configuracion config) {
-		return new OrderedGatewayFilter( (exchange,chain) -> {
+		return new OrderedGatewayFilter((exchange, chain) -> {
 			logger.info("Ejecutando pre gatewayFilter factory: " + config.mensaje);
-			return chain.filter(exchange).then(Mono.fromRunnable(()->{
-				
+			return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+
 				Optional.ofNullable(config.cookieValor).ifPresent(cookie -> {
 					exchange.getResponse().addCookie(ResponseCookie.from(config.cookieNombre, cookie).build());
 				});
 				logger.info("Ejecutando post gatewayFilter factory: " + config.mensaje);
-				
+
 			}));
-		},1);
+		}, 1);
 	}
-	
 
 	@Override
 	public List<String> shortcutFieldOrder() {
@@ -45,15 +44,13 @@ private final Logger logger = LoggerFactory.getLogger(EjemploGatewayFilterFactor
 		return Arrays.asList("mensaje", "cookieNombre", "CookieValor");
 	}
 
-
 	@Override
 	public String name() {
 		return "EjemploCookie";
 	}
 
-
 	public static class Configuracion {
-		private String mensaje,cookieNombre, cookieValor;
+		private String mensaje, cookieNombre, cookieValor;
 
 		public String getMensaje() {
 			return mensaje;
@@ -79,6 +76,5 @@ private final Logger logger = LoggerFactory.getLogger(EjemploGatewayFilterFactor
 			this.cookieValor = cookieValor;
 		}
 
-		
 	}
 }

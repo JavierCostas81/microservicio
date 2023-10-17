@@ -12,7 +12,7 @@ import com.formacionbdi.springboot.app.item.models.Item;
 
 @Service("serviceFeign")
 public class ItemServiceFeign implements ItemService {
-	
+
 	@Autowired
 	private ProductoClienteRest clienteFeign;
 
