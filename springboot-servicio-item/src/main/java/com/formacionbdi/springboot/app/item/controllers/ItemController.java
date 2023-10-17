@@ -55,11 +55,10 @@ public class ItemController {
 
 		return itemService.findById(id, cantidad);
 	}
-	
-	@TimeLimiter(name="items", fallbackMethod = "metodoAlternativo")
+	@CircuitBreaker(name="items",  fallbackMethod = "metodoAlternativo2")
+	@TimeLimiter(name="items")
 	@GetMapping("/ver3/{id}/cantidad/{cantidad}")
 	public CompletableFuture<Item> detalle3(@PathVariable Long id, @PathVariable Integer cantidad) {
-
 		return CompletableFuture.supplyAsync(()-> itemService.findById(id, cantidad));
 	}
 	
@@ -73,6 +72,18 @@ public class ItemController {
 		producto.setPrecio(500.00);
 		item.setProducto(producto);
 		return item;
+	}
+	
+	public CompletableFuture<Item> metodoAlternativo2(@PathVariable Long id, Integer cantidad, Throwable e) {
+		logger.info(e.getMessage());
+		Item item = new Item();
+		Producto producto = new Producto();
+		item.setCantidad(cantidad);
+		producto.setId(id);
+		producto.setNombre("Producto Alternativo");
+		producto.setPrecio(500.00);
+		item.setProducto(producto);
+		return CompletableFuture.supplyAsync(()-> item);
 	}
 
 }
