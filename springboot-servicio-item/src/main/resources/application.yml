@@ -2,11 +2,11 @@ server:
   port: 8002
 spring:
   application:
-    name: servicio-items 
+    name: servicio-items
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka     
+      defaultZone: http://127.0.0.1:8761/eureka
 resilience4j:
   circuitbreaker:
     configs:
