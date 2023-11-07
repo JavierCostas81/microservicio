@@ -30,17 +30,14 @@ public class Usuario implements Serializable {
 	private Boolean enabled;
 	private String nombre;
 	private String apellido;
-	//@Column(unique = true, length = 100)
+	// @Column(unique = true, length = 100)
 	private String email;
+	private Integer intentos;
 	@ManyToMany(fetch = FetchType.LAZY)
-	//Cambio de la tabla intermedia y claves foráneas
-	@JoinTable(name = "usuarios_roles",joinColumns = @JoinColumn(name="usuario_id"), inverseJoinColumns = @JoinColumn(name="role_id"),
-	//usuarios unicos para claves foraneas
-	uniqueConstraints = {
-			@UniqueConstraint(columnNames = {
-					"usuario_id", "role_id"
-			})
-	})
+	// Cambio de la tabla intermedia y claves foráneas
+	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "role_id"),
+			// usuarios unicos para claves foraneas
+			uniqueConstraints = { @UniqueConstraint(columnNames = { "usuario_id", "role_id" }) })
 	private List<Role> roles;
 
 	public Long getId() {
@@ -105,6 +102,14 @@ public class Usuario implements Serializable {
 
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
+	}
+
+	public Integer getIntentos() {
+		return intentos;
+	}
+
+	public void setIntentos(Integer intentos) {
+		this.intentos = intentos;
 	}
 
 	private static final long serialVersionUID = 4002221912401133094L;
