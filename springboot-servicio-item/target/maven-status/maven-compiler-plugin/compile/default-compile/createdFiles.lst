@@ -1,9 +1,0 @@
-com\formacionbdi\springboot\app\item\models\service\ItemServiceFeign.class
-com\formacionbdi\springboot\app\item\controllers\ItemController.class
-com\formacionbdi\springboot\app\item\SwaggerConfig.class
-com\formacionbdi\springboot\app\item\AppConfig.class
-com\formacionbdi\springboot\app\item\models\service\ItemServiceImpl.class
-com\formacionbdi\springboot\app\item\clientes\ProductoClienteRest.class
-com\formacionbdi\springboot\app\item\SpringbootServicioItemApplication.class
-com\formacionbdi\springboot\app\item\models\Item.class
-com\formacionbdi\springboot\app\item\models\service\ItemService.class
