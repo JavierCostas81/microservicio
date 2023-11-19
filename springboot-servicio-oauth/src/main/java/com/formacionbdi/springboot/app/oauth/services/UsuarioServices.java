@@ -17,11 +17,14 @@ import org.springframework.stereotype.Service;
 import com.formacionbdi.springboot.app.commons.usuarios.models.entity.Usuario;
 import com.formacionbdi.springboot.app.oauth.clients.UsuarioFeignClient;
 
+import brave.Tracer;
 import feign.FeignException;
 
 @Service
 public class UsuarioServices implements UserDetailsService, IUsuarioService {
 
+	@Autowired
+	private Tracer tracer;
 	@Autowired
 	private UsuarioFeignClient client;
 	private Logger log = LoggerFactory.getLogger(UsuarioServices.class);
@@ -39,8 +42,10 @@ public class UsuarioServices implements UserDetailsService, IUsuarioService {
 			return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true,
 					authorities);
 		} catch (FeignException e) {
-			log.error("El usuario '" + username + "' no existe");
-			throw new UsernameNotFoundException("El usuario '" + username + "' no existe");
+			String error = "El usuario '" + username + "' no existe"; 
+			log.error(error);
+			tracer.currentSpan().tag("error.mensaje", error + ": " + e.getMessage());
+			throw new UsernameNotFoundException(error);
 		}
 	}
 

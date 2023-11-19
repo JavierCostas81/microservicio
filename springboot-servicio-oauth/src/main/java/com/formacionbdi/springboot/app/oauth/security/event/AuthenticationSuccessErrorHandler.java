@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.formacionbdi.springboot.app.commons.usuarios.models.entity.Usuario;
 import com.formacionbdi.springboot.app.oauth.services.IUsuarioService;
 
+import brave.Tracer;
 import feign.FeignException;
 
 @Component
@@ -21,6 +22,9 @@ public class AuthenticationSuccessErrorHandler implements AuthenticationEventPub
 	
 	@Autowired
 	private IUsuarioService iUsuarioService; 
+	@Autowired
+	private Tracer tracer;
+	
 	@Override
 	public void publishAuthenticationSuccess(Authentication authentication) {
 		if (authentication.getDetails() instanceof WebAuthenticationDetails ) {
@@ -38,25 +42,31 @@ public class AuthenticationSuccessErrorHandler implements AuthenticationEventPub
 
 	@Override
 	public void publishAuthenticationFailure(AuthenticationException exception, Authentication authentication) {
+		String mensaje = "Error en el Login: " + exception.getMessage();
+		log.error(mensaje);
 		try {
+			StringBuilder errors = new StringBuilder();
+			errors.append(mensaje);
 		Usuario usuario = iUsuarioService.findByUsername(authentication.getName());
 		if (usuario.getIntentos() == null) {
 			log.info("Seteando intentos en 0");
 			usuario.setIntentos(0);
-		}
-		
+			}
 		usuario.setIntentos(usuario.getIntentos()+1);
 		log.info("Ampliando intentos en 1 (" + usuario.getIntentos() + ")");
+		errors.append(" - " + "Intentos de Login: " + usuario.getIntentos());
 		if (usuario.getIntentos() > 2) {
-			usuario.setEnabled(false);
-			log.error(String.format("@|bold,red Usuario %s deshabilitado|@", usuario.getNombre()));
+			String errorIntMax = String.format("Usuario %s deshabilitado", usuario.getUsername());
+			log.error(errorIntMax);
+			errors.append(" - " + errorIntMax);
+			usuario.setEnabled(false);			
 		}
 		iUsuarioService.update(usuario, usuario.getId());
+		tracer.currentSpan().tag("error mensaje", errors.toString());
 		}
 		catch (FeignException e) {
 			log.error(String.format("El usuario %s no existe en la DB", authentication.getName()));
 		}
-		String mensaje = "Error en el Login: " + exception.getMessage();
 		log.error(mensaje);
 	}
 	
