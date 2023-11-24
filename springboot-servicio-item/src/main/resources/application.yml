@@ -7,13 +7,13 @@ spring:
     sampler:
       probability: 1.0
   zipkin: 
-    base-url: http://127.0.0.1:9411/
+    base-url: http://zipkin-server:9411/
     sender:
       type: rabbit
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: http://servicio-eureka-server:8761/eureka
 resilience4j:
   circuitbreaker:
     configs:
@@ -34,3 +34,13 @@ resilience4j:
     instances:
       items:
         base-config: defecto
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+ribbon:
+  ConnectTimeout: 9000
+  ReadTimeout: 30000
